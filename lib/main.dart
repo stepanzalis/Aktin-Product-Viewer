@@ -1,20 +1,9 @@
-import 'package:flutter/material.dart';
+// coverage:ignore-file
 
-void main() {
-  runApp(const MainApp());
-}
+import 'app.dart';
+import 'bootstrap.dart';
+import 'config/di/injection.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+Future<void> main() async {
+  await bootstrap(injection, App.new);
 }
