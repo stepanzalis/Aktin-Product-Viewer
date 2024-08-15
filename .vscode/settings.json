@@ -1,0 +1,49 @@
+{
+    "search.exclude": {
+      "**/.fvm": true
+    },
+    "files.watcherExclude": {
+      "**/.fvm": true
+    },
+    "explorer.fileNesting.patterns": {
+      "pubspec.yaml": "pubspec.lock,pubspec_overrides.yaml,pubspec.semver.js, analysis_options.yaml,dart_test.yaml",
+      "README.md": "CHANGELOG.md",
+      "*.dart": "${capture}.freezed.dart, ${capture}.g.dart, ${capture}.fake.dart, ${capture}.mock.dart",
+      "*_bloc.dart": "${capture}_event.dart, ${capture}_state.dart",
+      "*_cubit.dart": "${capture}_state.dart",
+      ".gitignore": ".gitmodules,.git,.chignore,.pubignore,.dockerignore",
+      "app.dart": "main.dart, bootstrap.dart",
+      "*_impl_repository.dart": "${capture}_mockup_repository.dart,${capture}_fake_repository.dart",
+      "*_impl_local_data_source.dart": "${capture}_mockup_local_data_source.dart,${capture}_fake_local_data_source.dart"
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "[dart]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnType": true,
+      "editor.rulers": [
+        120
+      ],
+      "editor.formatOnPaste": true,
+      "editor.defaultFormatter": "Dart-Code.dart-code",
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
+      }
+    },
+    "dart.lineLength": 120,
+    "git.branchPrefix": "feature/",
+    "git.branchRandomName.enable": false,
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+    "dart.flutterTestAdditionalArgs": [
+      "--flavor",
+      "development",
+      "--dart-define-from-file",
+      ".env/development.json",
+      "--dart-define",
+      ".env/secrets/development.json",
+      "binding=integrationTest"
+    ],
+    "dart.flutterSdkPath": ".fvm/versions/3.24.0"
+  }

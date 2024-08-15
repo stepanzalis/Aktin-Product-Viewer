@@ -1,0 +1,6 @@
+{
+    "STAGE": "development",
+    "APP_NAME": "Aktin (dev)",
+    "APP_SUFFIX": ".dev",
+    "API_URL": "https://fakestoreapi.com"
+}
