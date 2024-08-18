@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/core/presentation/pages/error_page.dart';
+import '../constants/constants.dart';
 
 part 'router.extra.dart';
 part 'router.observer.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-const restorationScopeIdMain = "restoration_scope_main_id";
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -22,7 +22,7 @@ final router = GoRouter(
   ],
   initialLocation: ProductsListPage.routePath,
   debugLogDiagnostics: kDebugMode,
-  restorationScopeId: restorationScopeIdMain,
+  restorationScopeId: kRestorationScopeIdMain,
   errorBuilder: (context, state) {
     return ErrorPage(key: state.pageKey);
   },

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Base for Bloc prepared with cancelToken
-/// which is automatically closed.
+/// which automatically cancels the request when the bloc is closed.
 abstract class AktinBloc<Event, State> extends Bloc<Event, State> {
   AktinBloc(super.initialState);
 

@@ -27,7 +27,7 @@ Future<void> injection() async {
   // Get all features
   final injectableFeatures = features.map((feature) => feature.getInjectable(locator));
 
-  setUpApiConfig(kBaseUrl);
+  setUpApiConfig();
 
   await initialize(injectableFeatures);
 }
@@ -36,10 +36,10 @@ Future<void> injection() async {
 Future<void> initialize(Iterable<InjectableFeature> features) async {
   try {
     for (final feature in features) {
-      feature.register();
-    }
-    for (final feature in features) {
-      feature.postRegister();
+      feature
+        ..preRegister()
+        ..register()
+        ..postRegister();
     }
   } catch (e, _) {
     log("Error initializing GetIt: $e");
@@ -47,10 +47,10 @@ Future<void> initialize(Iterable<InjectableFeature> features) async {
 }
 
 /// Setup a new API configuration
-void setUpApiConfig(String baseUrl) {
+void setUpApiConfig() {
   locator.registerSingleton<ApiConfig>(
     ApiConfig(
-      baseUrl,
+      kBaseUrl,
       debug: kDebugMode,
       connectionTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 30),
