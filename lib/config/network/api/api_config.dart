@@ -7,11 +7,10 @@ typedef AddInterceptors = List<Interceptor> Function(Dio dio);
 class ApiConfig {
   const ApiConfig(
     this.baseUrl, {
-    this.connectionTimeout = const Duration(seconds: 5),
-    this.receiveTimeout = const Duration(seconds: 15),
+    this.connectionTimeout = const Duration(seconds: 10),
+    this.receiveTimeout = const Duration(seconds: 20),
     this.interceptors = const [],
     this.onInitialization,
-    this.useSelfSignedCertificate = false,
     this.useIsolate = true,
     this.useConnectivity = true,
     this.debug = false,
@@ -26,23 +25,19 @@ class ApiConfig {
   /// Use connectivity package to check internet connection
   final bool useConnectivity;
 
-  /// Use self signed certificate
-  // ! Don't use this in production
-  final bool useSelfSignedCertificate;
-
-  /// Connection timeout
+  /// Connection timeout duration
   final Duration connectionTimeout;
 
-  /// Receive timeout
+  /// Receive response timeout duration for receiving data
   final Duration receiveTimeout;
 
-  /// Use isolate for Dio
+  /// Flag if to use isolate for Dio requests
   final bool useIsolate;
 
   /// Debug mode
   final bool debug;
 
-  /// Callback for adding interceptors
+  /// Callback after all interceptors are added
   final AddInterceptors? onInitialization;
 
   /// Interceptors
@@ -54,7 +49,7 @@ class ApiConfig {
   /// Connectivity check interval
   final Duration connectivityCheckInterval;
 
-  /// SSL pinning trusted certificates
+  /// SSL trusted certificates for better security
   final List<String> sslPinningTrustedCertificates;
 }
 

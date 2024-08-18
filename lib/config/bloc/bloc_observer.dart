@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Bloc observer is used to log every error that occurs in cubit / bloc
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 

@@ -15,10 +15,8 @@ class App extends StatelessWidget {
       scaffoldMessengerKey: scaffoldGlobalKey,
       routerConfig: router,
       localizationsDelegates: const <LocalizationsDelegate<Object>>[],
-      supportedLocales: const [
-        Locale('en', 'US'),
-      ],
-      onGenerateTitle: (context) => "Aktin Product App",
+      supportedLocales: const [Locale('en', 'US')],
+      onGenerateTitle: (context) => "Aktin Products App",
       debugShowCheckedModeBanner: false,
       scrollBehavior: const MaterialScrollBehavior(),
       builder: (context, child) => child ?? const SizedBox(),

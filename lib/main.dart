@@ -1,8 +1,8 @@
 // coverage:ignore-file
 
-import 'app.dart';
-import 'bootstrap.dart';
-import 'config/di/injection.dart';
+import 'package:aktin_product_viewer/app.dart';
+import 'package:aktin_product_viewer/bootstrap.dart';
+import 'package:aktin_product_viewer/config/di/injection.dart';
 
 Future<void> main() async {
   await bootstrap(injection, App.new);

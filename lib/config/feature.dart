@@ -15,8 +15,8 @@ abstract class Feature {
 
   InjectableFeature getInjectable(GetIt locator);
 
-  // Note: Could be another method like `getFakeInjectable` for hardcoded values
-  // InjectableFeature getFakeInjectable(GetIt locator);
+  // Note: Here could be another getters like `getFakeInjectable` for hardcoded values
+  // Example: InjectableFeature getFakeInjectable(GetIt locator);
 
   void registerLocalSourceAdapters() {}
 }
