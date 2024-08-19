@@ -23,6 +23,8 @@ class ProductDetailView extends StatelessWidget {
           const SizedBox(height: 24),
           _ProductTitle(product: product),
           const SizedBox(height: 16),
+          _ProductRating(product: product),
+          const SizedBox(height: 16),
           _ProductDescription(product: product),
           const SizedBox(height: 24),
           _ProductPrice(product: product),
@@ -70,6 +72,29 @@ class _ProductTitle extends StatelessWidget {
       ),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+class _ProductRating extends StatelessWidget {
+  const _ProductRating({required this.product});
+
+  final ProductEntity product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(Icons.star, color: Colors.yellow[700]),
+        const SizedBox(width: 4),
+        Text(
+          '${product.ratingValue.toStringAsFixed(1)} (${product.ratingCount} votes)',
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      ],
     );
   }
 }
