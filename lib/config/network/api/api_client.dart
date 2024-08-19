@@ -23,11 +23,8 @@ class ApiClient {
     required this.config,
     required this.dio,
   }) {
-    connection = NetworkConnectionManager(config);
     isolate = YAJsonIsolate();
-    if (config.useConnectivity) {
-      connection.start();
-    }
+
     if (config.useIsolate) {
       isolate.initialize();
     }
@@ -38,18 +35,13 @@ class ApiClient {
   final ApiConfig config;
   final Dio dio;
 
-  ValueNotifier<NetworkConnectionStatus> get connectionState => connection.networkChangeListener;
-
   @protected
   late final YAJsonIsolate isolate;
-
-  late NetworkConnectionManager connection;
 
   /// Close stream
   ///
   /// call on dispose application
   void close() {
-    connection.close();
     isolate.dispose();
   }
 }

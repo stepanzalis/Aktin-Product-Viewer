@@ -6,21 +6,26 @@ import 'dart:developer';
 import 'package:aktin_product_viewer/config/constants/constants.dart';
 import 'package:aktin_product_viewer/config/di/injectable_feature.dart';
 import 'package:aktin_product_viewer/config/feature.dart';
+import 'package:aktin_product_viewer/config/network/connectivity/connectivity.dart';
 import 'package:aktin_product_viewer/feature/products/products_feature.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../feature/core/core.feature.dart';
 import '../network/api/api.dart';
+import '../network/api/interceptors/no_internet_interceptor.dart';
 
 late final GetIt locator;
 
+/// List of all features
 const features = <Feature>[
   CoreFeature(),
   ProductsFeature(),
 ];
 
+/// Initialize all dependencies
 Future<void> injection() async {
   locator = GetIt.instance;
 
@@ -52,14 +57,19 @@ void setUpApiConfig() {
     ApiConfig(
       kBaseUrl,
       debug: kDebugMode,
-      connectionTimeout: const Duration(seconds: 20),
+      connectionTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 30),
       useConnectivity: false,
       interceptors: [
-        LogInterceptor(
-          requestBody: true,
-          responseBody: true,
+        NoInternetInterceptor(
+          networkInfo: ConnectivityInfoImpl(connectionChecker: Connectivity()),
         ),
+        if (kDebugMode)
+          LogInterceptor(
+            requestBody: true,
+            responseBody: true,
+            error: true,
+          ),
       ],
     ),
   );
