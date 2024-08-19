@@ -24,18 +24,20 @@ void main() {
   );
 
   blocTest<ProductsListBloc, ProductsListState>(
-    'emits [ProductsListProgressState, ProductsListFailureState] when an error occurs while loading products',
+    'emits [ProductsListProgressState, ProductsListFailureState] when an error occurs while saving products',
     setUp: () {
-      when(() => mockProductsRepository.saveProducts())
+      // Ensure that the mock returns a proper ErrorResult
+      when(() => mockProductsRepository.saveProducts(cancelToken: any(named: 'cancelToken')))
           .thenAnswer((_) async => ErrorResult(const UnknownFailure('Failed to load products')));
       when(() => mockProductsRepository.watchProducts()).thenAnswer(
         (_) => const Stream<List<ProductEntity>>.empty(),
       );
     },
     build: () => ProductsListBloc(productsRepository: mockProductsRepository),
-    act: (bloc) => bloc
-      ..add(ProductsListLoadEvent())
-      ..add(ListenToProductsEvent()),
+    act: (bloc) {
+      bloc.add(ListenToProductsEvent());
+      bloc.add(ProductsListLoadEvent());
+    },
     expect: () => [
       ProductsListProgressState(),
       ProductsListFailureState(const UnknownFailure('Failed to load products')),
@@ -45,15 +47,18 @@ void main() {
   blocTest<ProductsListBloc, ProductsListState>(
     'emits [ProductsListProgressState, ProductsListLoadedState] when products are loaded successfully',
     setUp: () {
-      when(() => mockProductsRepository.saveProducts()).thenAnswer((_) async => SuccessResult({}));
+      // Ensure that the mock returns a proper SuccessResult
+      when(() => mockProductsRepository.saveProducts(cancelToken: any(named: 'cancelToken')))
+          .thenAnswer((_) async => SuccessResult<void>({}));
       when(() => mockProductsRepository.watchProducts()).thenAnswer(
         (_) => Stream.value([ProductEntity.mock()]),
       );
     },
     build: () => ProductsListBloc(productsRepository: mockProductsRepository),
-    act: (bloc) => bloc
-      ..add(ProductsListLoadEvent())
-      ..add(ListenToProductsEvent()),
+    act: (bloc) {
+      bloc.add(ListenToProductsEvent());
+      bloc.add(ProductsListLoadEvent());
+    },
     expect: () => [
       ProductsListProgressState(),
       ProductsListLoadedState([ProductEntity.mock()]),
@@ -63,15 +68,18 @@ void main() {
   blocTest<ProductsListBloc, ProductsListState>(
     'emits [ProductsListProgressState, ProductsListLoadedState] with an empty list when no products are available',
     setUp: () {
-      when(() => mockProductsRepository.saveProducts()).thenAnswer((_) async => SuccessResult({}));
+      // Ensure that the mock returns a proper SuccessResult
+      when(() => mockProductsRepository.saveProducts(cancelToken: any(named: 'cancelToken')))
+          .thenAnswer((_) async => SuccessResult<void>({}));
       when(() => mockProductsRepository.watchProducts()).thenAnswer(
         (_) => Stream.value([]),
       );
     },
     build: () => ProductsListBloc(productsRepository: mockProductsRepository),
-    act: (bloc) => bloc
-      ..add(ProductsListLoadEvent())
-      ..add(ListenToProductsEvent()),
+    act: (bloc) {
+      bloc.add(ListenToProductsEvent());
+      bloc.add(ProductsListLoadEvent());
+    },
     expect: () => [
       ProductsListProgressState(),
       ProductsListLoadedState(const []),

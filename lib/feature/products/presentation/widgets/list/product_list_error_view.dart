@@ -12,13 +12,15 @@ class ProductListErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(title),
-        const SizedBox(height: 16),
-        Text(message ?? ""),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(title),
+          const SizedBox(height: 16),
+          Text(message ?? ""),
+        ],
+      ),
     );
   }
 }

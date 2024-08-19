@@ -7,24 +7,35 @@ import '../../../domain/product_entity.dart';
 ///
 /// This widget displays a card with the product image, title, description, and price
 class ProductItemCard extends StatelessWidget {
-  const ProductItemCard({required this.product, super.key});
+  const ProductItemCard({
+    required this.product,
+    required this.onTap,
+    super.key,
+  });
 
+  /// Product entity to display
   final ProductEntity product;
+
+  /// Callback when the card is tapped
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _ProductImage(imageUrl: product.imageUrl),
-            const SizedBox(width: 16),
-            Expanded(child: _ProductDetails(product: product)),
-          ],
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _ProductImage(imageUrl: product.imageUrl),
+              const SizedBox(width: 16),
+              Expanded(child: _ProductDetails(product: product)),
+            ],
+          ),
         ),
       ),
     );
@@ -113,10 +124,10 @@ class _ProductPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "\$${price.toStringAsFixed(2)}",
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Colors.green,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
