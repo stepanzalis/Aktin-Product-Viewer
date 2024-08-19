@@ -48,14 +48,14 @@ void main() {
       ];
 
       when(() => mockProductsApi.fetchProducts()).thenAnswer((_) async => productDtos);
-      when(() => mockProductsDao.insertProducts(any())).thenAnswer((_) async => {});
+      when(() => mockProductsDao.upsertProducts(any())).thenAnswer((_) async => {});
 
       // act
       await repository.saveProducts();
 
       // assert
       verify(() => mockProductsApi.fetchProducts()).called(1);
-      verify(() => mockProductsDao.insertProducts(any())).called(1);
+      verify(() => mockProductsDao.upsertProducts(any())).called(1);
     });
 
     group('watchProducts', () {

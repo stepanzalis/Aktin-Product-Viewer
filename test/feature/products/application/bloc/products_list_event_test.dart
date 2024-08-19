@@ -7,6 +7,7 @@ void main() {
     test('[ProductsListLoadEvent] should be a subclass of Equatable', () {
       // assert
       expect(ProductsListLoadEvent(), isA<Equatable>());
+      expect(ListenToProductsEvent(), isA<Equatable>());
     });
   });
 }

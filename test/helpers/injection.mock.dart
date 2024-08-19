@@ -10,6 +10,10 @@ class MockDio extends Mock implements Dio {}
 
 class MockBuildContext extends Mock implements BuildContext {}
 
+// Connectivity
+
+class MockConnectivity extends Mock implements Connectivity {}
+
 // Products
 
 class MockProductsDao extends Mock implements ProductsDao {}
