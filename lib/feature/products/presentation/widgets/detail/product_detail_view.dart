@@ -1,4 +1,5 @@
 import 'package:aktin_product_viewer/feature/products/domain/product_entity.dart';
+import 'package:aktin_product_viewer/feature/products/presentation/extensions/price_extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 class ProductDetailView extends StatelessWidget {
   const ProductDetailView({required this.product, super.key});
 
+  /// Product to display
   final ProductEntity product;
 
   @override
@@ -35,12 +37,14 @@ class _ProductImage extends StatelessWidget {
 
   final ProductEntity product;
 
+  final _imageHeight = 250.0;
+
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: product.imageUrl,
       width: double.infinity,
-      height: 250,
+      height: _imageHeight,
       placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) => const Icon(
         Icons.error,
@@ -95,7 +99,7 @@ class _ProductPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "\$${product.price.toStringAsFixed(2)}",
+      product.price.formatCurrency(),
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,

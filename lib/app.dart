@@ -14,8 +14,6 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       scaffoldMessengerKey: scaffoldGlobalKey,
       routerConfig: router,
-      localizationsDelegates: const <LocalizationsDelegate<Object>>[],
-      supportedLocales: const [Locale('en', 'US')],
       onGenerateTitle: (context) => "Aktin Products App",
       debugShowCheckedModeBanner: false,
       scrollBehavior: const MaterialScrollBehavior(),

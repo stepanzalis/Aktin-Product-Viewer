@@ -15,7 +15,7 @@ class ProductEntity extends Equatable {
   factory ProductEntity.mock() => const ProductEntity(
         id: 1,
         category: '',
-        title: '',
+        title: 'Title',
         price: 1,
         description: '',
         imageUrl: '',

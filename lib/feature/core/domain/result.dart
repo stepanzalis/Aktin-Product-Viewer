@@ -125,11 +125,7 @@ sealed class Result<T> {
 
   Future<void> handleFailure({Function? onConfirm}) async {
     if (this is ErrorResult) {
-      final failure = (this as ErrorResult<T>).error;
-      // return await showErrorDialogFromFailure(
-      //   failure,
-      //   onConfirm: onConfirm,
-      // );
+      // Show error dialog, snackbar, or toast if needed
     }
   }
 

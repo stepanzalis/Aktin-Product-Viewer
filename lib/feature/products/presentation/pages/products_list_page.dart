@@ -20,6 +20,7 @@ class ProductsListPage extends StatelessWidget {
         ..add(ProductsListLoadEvent())
         ..add(ListenToProductsEvent()),
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Products List'),
         ),
