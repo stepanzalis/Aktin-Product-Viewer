@@ -7,7 +7,7 @@ import 'package:aktin_product_viewer/config/constants/constants.dart';
 import 'package:aktin_product_viewer/config/di/injectable_feature.dart';
 import 'package:aktin_product_viewer/config/feature.dart';
 import 'package:aktin_product_viewer/config/network/connectivity/connectivity.dart';
-import 'package:aktin_product_viewer/feature/products/products_feature.dart';
+import 'package:aktin_product_viewer/feature/products/products.feature.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
