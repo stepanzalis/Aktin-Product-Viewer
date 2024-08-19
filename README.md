@@ -2,6 +2,8 @@
 
 This repository contains Aktin's home task mobile application.
 
+![Recording](images/record.gif)
+
 &nbsp;
 
 # Getting Started
