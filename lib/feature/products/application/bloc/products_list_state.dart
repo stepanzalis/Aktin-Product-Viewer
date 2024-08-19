@@ -6,7 +6,7 @@ part of 'products_list_bloc.dart';
 /// - [ProductsListProgressState]: the state when data is being loaded.
 /// - [ProductsListLoadedState]: the state when data has been successfully loaded.
 /// - [ProductsListFailureState]: the state when an error occurs while loading data.
-abstract class ProductsListState extends Equatable {
+sealed class ProductsListState extends Equatable {
   @override
   List<Object?> get props => [];
 }
@@ -27,12 +27,12 @@ final class ProductsListLoadedState extends ProductsListState {
   List<Object?> get props => [products];
 }
 
-/// The state when an error occurs while loading data.
+/// The state when an error occurs
 final class ProductsListFailureState extends ProductsListState {
-  final String message;
+  final Failure failure;
 
-  ProductsListFailureState(this.message);
+  ProductsListFailureState(this.failure);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [failure];
 }

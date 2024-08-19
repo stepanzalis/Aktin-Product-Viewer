@@ -1,7 +1,7 @@
 // coverage:ignore-file
 import 'package:aktin_product_viewer/config/router/router.dart';
-import 'package:aktin_product_viewer/feature/products/presentation/products_detail_page.dart';
-import 'package:aktin_product_viewer/feature/products/presentation/products_list_page.dart';
+import 'package:aktin_product_viewer/feature/products/presentation/pages/products_detail_page.dart';
+import 'package:aktin_product_viewer/feature/products/presentation/pages/products_list_page.dart';
 import 'package:go_router/go_router.dart';
 
 List<GoRoute> productsRouter = [

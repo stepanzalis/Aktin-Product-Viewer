@@ -1,6 +1,6 @@
 import 'package:aktin_product_viewer/feature/core/config/router/core_router.dart';
 import 'package:aktin_product_viewer/feature/products/config/router/products_router.dart';
-import 'package:aktin_product_viewer/feature/products/presentation/products_list_page.dart';
+import 'package:aktin_product_viewer/feature/products/presentation/pages/products_list_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

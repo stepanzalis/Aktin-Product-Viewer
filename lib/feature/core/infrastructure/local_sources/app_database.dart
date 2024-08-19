@@ -20,7 +20,7 @@ class AppDatabase extends _$AppDatabase {
 
 /// Table for storing products
 class ProductEntry extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
   RealColumn get price => real()();
   TextColumn get description => text()();

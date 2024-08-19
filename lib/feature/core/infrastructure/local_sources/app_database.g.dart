@@ -13,7 +13,11 @@ class $ProductEntryTable extends ProductEntry
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
@@ -67,8 +71,6 @@ class $ProductEntryTable extends ProductEntry
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -118,7 +120,7 @@ class $ProductEntryTable extends ProductEntry
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   ProductEntryData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -297,7 +299,6 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
   final Value<String> image;
   final Value<double> rate;
   final Value<int> rateCount;
-  final Value<int> rowid;
   const ProductEntryCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -307,10 +308,9 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
     this.image = const Value.absent(),
     this.rate = const Value.absent(),
     this.rateCount = const Value.absent(),
-    this.rowid = const Value.absent(),
   });
   ProductEntryCompanion.insert({
-    required int id,
+    this.id = const Value.absent(),
     required String title,
     required double price,
     required String description,
@@ -318,9 +318,7 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
     required String image,
     required double rate,
     required int rateCount,
-    this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        title = Value(title),
+  })  : title = Value(title),
         price = Value(price),
         description = Value(description),
         category = Value(category),
@@ -336,7 +334,6 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
     Expression<String>? image,
     Expression<double>? rate,
     Expression<int>? rateCount,
-    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -347,7 +344,6 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
       if (image != null) 'image': image,
       if (rate != null) 'rate': rate,
       if (rateCount != null) 'rate_count': rateCount,
-      if (rowid != null) 'rowid': rowid,
     });
   }
 
@@ -359,8 +355,7 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
       Value<String>? category,
       Value<String>? image,
       Value<double>? rate,
-      Value<int>? rateCount,
-      Value<int>? rowid}) {
+      Value<int>? rateCount}) {
     return ProductEntryCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -370,7 +365,6 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
       image: image ?? this.image,
       rate: rate ?? this.rate,
       rateCount: rateCount ?? this.rateCount,
-      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -401,9 +395,6 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
     if (rateCount.present) {
       map['rate_count'] = Variable<int>(rateCount.value);
     }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
     return map;
   }
 
@@ -417,8 +408,7 @@ class ProductEntryCompanion extends UpdateCompanion<ProductEntryData> {
           ..write('category: $category, ')
           ..write('image: $image, ')
           ..write('rate: $rate, ')
-          ..write('rateCount: $rateCount, ')
-          ..write('rowid: $rowid')
+          ..write('rateCount: $rateCount')
           ..write(')'))
         .toString();
   }
@@ -438,7 +428,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$ProductEntryTableCreateCompanionBuilder = ProductEntryCompanion
     Function({
-  required int id,
+  Value<int> id,
   required String title,
   required double price,
   required String description,
@@ -446,7 +436,6 @@ typedef $$ProductEntryTableCreateCompanionBuilder = ProductEntryCompanion
   required String image,
   required double rate,
   required int rateCount,
-  Value<int> rowid,
 });
 typedef $$ProductEntryTableUpdateCompanionBuilder = ProductEntryCompanion
     Function({
@@ -458,7 +447,6 @@ typedef $$ProductEntryTableUpdateCompanionBuilder = ProductEntryCompanion
   Value<String> image,
   Value<double> rate,
   Value<int> rateCount,
-  Value<int> rowid,
 });
 
 class $$ProductEntryTableFilterComposer
@@ -580,7 +568,6 @@ class $$ProductEntryTableTableManager extends RootTableManager<
             Value<String> image = const Value.absent(),
             Value<double> rate = const Value.absent(),
             Value<int> rateCount = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
           }) =>
               ProductEntryCompanion(
             id: id,
@@ -591,10 +578,9 @@ class $$ProductEntryTableTableManager extends RootTableManager<
             image: image,
             rate: rate,
             rateCount: rateCount,
-            rowid: rowid,
           ),
           createCompanionCallback: ({
-            required int id,
+            Value<int> id = const Value.absent(),
             required String title,
             required double price,
             required String description,
@@ -602,7 +588,6 @@ class $$ProductEntryTableTableManager extends RootTableManager<
             required String image,
             required double rate,
             required int rateCount,
-            Value<int> rowid = const Value.absent(),
           }) =>
               ProductEntryCompanion.insert(
             id: id,
@@ -613,7 +598,6 @@ class $$ProductEntryTableTableManager extends RootTableManager<
             image: image,
             rate: rate,
             rateCount: rateCount,
-            rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

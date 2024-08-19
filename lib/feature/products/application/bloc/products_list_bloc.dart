@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aktin_product_viewer/feature/core/application/cubit/aktin_bloc.dart';
+import 'package:aktin_product_viewer/feature/core/domain/exception/failure.dart';
 import 'package:aktin_product_viewer/feature/products/infrastructure/repositories/products_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,10 @@ part 'products_list_state.dart';
 
 /// Bloc that manages the state of the products list screen
 class ProductsListBloc extends AktinBloc<ProductsListEvent, ProductsListState> {
+  /// Repository to fetch products
   final ProductsRepository _productsRepository;
+
+  /// Subscription to the products stream
   StreamSubscription<List<ProductEntity>>? _productsSubscription;
 
   ProductsListBloc({
@@ -20,22 +24,22 @@ class ProductsListBloc extends AktinBloc<ProductsListEvent, ProductsListState> {
   })  : _productsRepository = productsRepository,
         super(ProductsListInitialState()) {
     on<ProductsListLoadEvent>(_onLoadProducts);
+    on<ListenToProductsEvent>(_listenToProducts);
   }
 
-  Future<void> _onLoadProducts(ProductsListLoadEvent event, Emitter<ProductsListState> emit) async {
+  Future<void> _onLoadProducts(_, Emitter<ProductsListState> emit) async {
     emit(ProductsListProgressState());
-    try {
-      await _productsRepository.saveProducts();
 
-      // Start listening to the stream after saving products
-      await emit.forEach<List<ProductEntity>>(
-        _productsRepository.watchProducts(),
-        onData: (products) => ProductsListLoadedState(products),
-        onError: (error, stackTrace) => ProductsListFailureState(error.toString()),
-      );
-    } catch (e) {
-      emit(ProductsListFailureState(e.toString()));
-    }
+    final result = await _productsRepository.saveProducts(cancelToken: cancelToken);
+    return result.ifFailure((failure) => emit(ProductsListFailureState(failure)));
+  }
+
+  Future<void> _listenToProducts(_, Emitter<ProductsListState> emit) async {
+    await emit.forEach<List<ProductEntity>>(
+      _productsRepository.watchProducts(),
+      onData: (products) => ProductsListLoadedState(products),
+      onError: (_, __) => ProductsListFailureState(const DatabaseFailure('Failed to load products')),
+    );
   }
 
   @override

@@ -6,3 +6,5 @@ abstract class ProductsListEvent extends Equatable {
 }
 
 final class ProductsListLoadEvent extends ProductsListEvent {}
+
+final class ListenToProductsEvent extends ProductsListEvent {}

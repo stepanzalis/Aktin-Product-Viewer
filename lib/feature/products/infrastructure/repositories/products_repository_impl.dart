@@ -6,7 +6,9 @@ import 'package:aktin_product_viewer/feature/products/infrastructure/dto/product
 import 'package:aktin_product_viewer/feature/products/infrastructure/local_sources/products_dao.dart';
 import 'package:aktin_product_viewer/feature/products/infrastructure/remote_sources/products_api.dart';
 import 'package:aktin_product_viewer/feature/products/infrastructure/repositories/products_repository.dart';
+import 'package:dio/dio.dart';
 
+import '../../../core/domain/result.dart';
 import '../../domain/product_entity.dart';
 
 /// Concrete implementation of [ProductsRepository]
@@ -26,9 +28,14 @@ final class ProductsRepositoryImpl extends ProductsRepository {
   final ProductsDao productsDao;
 
   @override
-  Future<void> saveProducts() async {
-    final products = await _fetchProductsFromApi();
-    await _insertProductsIntoLocalCache(products);
+  Future<Result<void>> saveProducts({CancelToken? cancelToken}) async {
+    return Result.guardFuture(
+      () => _fetchProductsFromApi().then(
+        (products) {
+          return _insertProductsIntoLocalCache(products);
+        },
+      ),
+    );
   }
 
   @override
@@ -36,12 +43,12 @@ final class ProductsRepositoryImpl extends ProductsRepository {
     return productsDao.products().map((products) => products.map((product) => product.toEntity()).toList());
   }
 
-  Future<List<ProductDto>> _fetchProductsFromApi() async {
-    return await productsApi.fetchProducts();
+  Future<List<ProductDto>> _fetchProductsFromApi([CancelToken? cancelToken]) async {
+    return await productsApi.fetchProducts(cancelToken);
   }
 
   Future<void> _insertProductsIntoLocalCache(List<ProductDto> products) async {
     final productsData = products.map((dto) => dto.toLocalDataSource()).toList();
-    await productsDao.insertProducts(productsData);
+    await productsDao.upsertProducts(productsData);
   }
 }

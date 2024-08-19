@@ -7,10 +7,10 @@ part 'products_dao.g.dart';
 class ProductsDao extends DatabaseAccessor<AppDatabase> with _$ProductsDaoMixin {
   ProductsDao(super.db);
 
-  /// Insert a list of products
-  Future<void> insertProducts(List<ProductEntryData> products) async {
+  /// Upsert a list of products
+  Future<void> upsertProducts(List<ProductEntryData> products) async {
     await batch((batch) {
-      batch.insertAll(productEntry, products);
+      batch.insertAllOnConflictUpdate(productEntry, products);
     });
   }
 

@@ -10,12 +10,8 @@ class ProductsApi {
   ///
   /// Returns a list of [ProductDto]
   /// Throws a [DioException] if an error occurs
-  Future<List<ProductDto>> fetchProducts() async {
-    try {
-      final response = await _dio.get('/products');
-      return List<ProductDto>.from(response.data.map((model) => ProductDto.fromJson(model)));
-    } catch (error, stackTrace) {
-      throw DioException(requestOptions: RequestOptions(path: '/products'), error: error, stackTrace: stackTrace);
-    }
+  Future<List<ProductDto>> fetchProducts([CancelToken? cancelToken]) async {
+    final response = await _dio.get('/products', cancelToken: cancelToken);
+    return List<ProductDto>.from(response.data.map((model) => ProductDto.fromJson(model)));
   }
 }
