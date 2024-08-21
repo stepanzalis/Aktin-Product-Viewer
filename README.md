@@ -1,6 +1,6 @@
-# Aktin Product Viewer
+# FAKE API Product Viewer
 
-This repository contains Aktin's home task mobile application.
+This repository contains test mobile application for Fake Product API.
 
 ![Recording](images/record.gif)
 
