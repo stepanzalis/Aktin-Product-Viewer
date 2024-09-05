@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Base for Cubit prepared with cancelToken
-/// which is automatically closed.
-abstract class AktinCubit<State> extends Cubit<State> {
-  AktinCubit(super.initialState);
+/// Base for Bloc prepared with cancelToken
+/// which automatically cancels the request when the bloc is closed.
+abstract class AppBloc<Event, State> extends Bloc<Event, State> {
+  AppBloc(super.initialState);
 
   final CancelToken cancelToken = CancelToken();
 
@@ -21,6 +21,7 @@ abstract class AktinCubit<State> extends Cubit<State> {
   void emit(State state) {
     if (isClosed) return;
 
+    // ignore: invalid_use_of_visible_for_testing_member
     super.emit(state);
   }
 }

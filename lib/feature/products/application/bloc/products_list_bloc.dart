@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aktin_product_viewer/feature/core/application/cubit/aktin_bloc.dart';
+import 'package:aktin_product_viewer/feature/core/application/cubit/app_bloc.dart';
 import 'package:aktin_product_viewer/feature/core/domain/exception/failure.dart';
 import 'package:aktin_product_viewer/feature/products/infrastructure/repositories/products_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +12,7 @@ part 'products_list_event.dart';
 part 'products_list_state.dart';
 
 /// Bloc that manages the state of the products list screen
-class ProductsListBloc extends AktinBloc<ProductsListEvent, ProductsListState> {
+class ProductsListBloc extends AppBloc<ProductsListEvent, ProductsListState> {
   /// Repository to fetch products
   final ProductsRepository _productsRepository;
 
